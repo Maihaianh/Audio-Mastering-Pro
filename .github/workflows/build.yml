@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v4
 
@@ -15,12 +15,20 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Install dependencies
+    - name: Install system dependencies
       run: |
+        sudo dpkg --add-architecture i386
         sudo apt-get update
-        sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+        sudo apt-get install -y \
+          build-core build-essential ccache git libncurses5:i386 libstdc++6:i386 \
+          libz1:i386 zlib1g-dev libffi-dev libssl-dev patchelf \
+          python3-pip python3-dev python3-setuptools python3-virtualenv \
+          openjdk-17-jdk unzip wget curl autoconf libtool pkg-config
+
+    - name: Install Python build tools
+      run: |
         pip install --upgrade pip
-        pip install buildozer Cython==0.29.36
+        pip install --upgrade cython==0.29.36 buildozer
 
     - name: Build with Buildozer
       run: |
