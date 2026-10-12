@@ -9,7 +9,11 @@ requirements = python3,kivy,numpy,scipy,soundfile,host_python3
 orientation = portrait
 fullscreen = 0
 android.permissions = WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
-android.api = 33
+
+# Cấu hình API và NDK tương thích ổn định nhất cho Buildozer
+android.api = 31
 android.minapi = 21
-android.ndk = 25b
-android.sdk = 33
+android.sdk = 31
+android.ndk = 23b
+android.skip_update = 0
+android.accept_sdk_license = True
